@@ -1,0 +1,19 @@
+{
+  "base_features": [
+    "heart_rate",
+    "spo2",
+    "temperature"
+  ],
+  "time_features": [
+    "hour_of_day",
+    "is_night"
+  ],
+  "model_features": [
+    "heart_rate",
+    "spo2",
+    "temperature",
+    "hour_of_day",
+    "is_night"
+  ],
+  "target": "risk_level"
+}

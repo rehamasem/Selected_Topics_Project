@@ -1,0 +1,132 @@
+
+=================================================================
+  STEP 1 -- DATA LOADING
+=================================================================
+  Train : (119154, 7)   Val : (25533, 7)   Test : (25533, 7)
+
+  Label distribution (train):
+    Class 0 (Normal) :  37943 samples
+    Class 1 (Abnormal) :  40605 samples
+    Class 2 (Critical) :  40606 samples
+
+=================================================================
+  STEP 2 -- DATA PREPROCESSING
+=================================================================
+
+  [2a] Outlier Removal -- IQR method (factor = 2.0)
+     Before: 119154  After: 91244  Removed: 27910 (23.4%)
+     Class 0 (Normal) :  37943 samples
+     Class 1 (Abnormal) :  40605 samples
+     Class 2 (Critical) :  12696 samples
+
+  [2b] Feature Scaling -- StandardScaler
+     Mean : [78.396 96.684 36.809]
+     Std  : [18.578  3.024  0.802]
+
+  [2c] Data Augmentation -- Gaussian Noise + SMOTE
+     Gaussian noise  : 91244 -> 182488 samples
+     SMOTE input     : 45000 samples (15000/class)
+     After SMOTE     : 227488 samples   {np.int64(0): 90886, np.int64(1): 96210, np.int64(2): 40392}
+
+     Train: (227488, 3)  Val: (25533, 3)  Test: (25533, 3)
+
+=================================================================
+  STEP 3 -- DEEP LEARNING MODEL ARCHITECTURE
+=================================================================
+  Architecture : Stem -> 6 x ResBlock -> Classifier Head
+  Parameters   : 1,622,275 total  |  1,622,275 trainable
+  Device       : cpu
+
+=================================================================
+  STEP 4 -- TRAINING
+=================================================================
+
+  Epochs=25  BatchSize=2048  LR=0.003  Patience=15
+   Epoch    Tr Loss    Tr Acc   Val Loss   Val Acc          LR
+  -----------------------------------------------------------------
+       1     0.1607    0.9342     0.0638    0.9722    2.99e-03
+       5     0.1026    0.9599     0.0679    0.9667    2.71e-03
+      10     0.0964    0.9620     0.0504    0.9758    1.97e-03
+      15     0.0762    0.9689     0.0546    0.9778    1.04e-03
+      20     0.0706    0.9714     0.0306    0.9891    2.96e-04
+      25     0.0649    0.9739     0.0281    0.9901    1.00e-05
+
+  Training time : 1917.7 s (32.0 min)
+  Best val loss : 0.0270  |  Best val acc: 0.9914
+
+=================================================================
+  STEP 5 -- LEARNING CURVES
+=================================================================
+
+=================================================================
+  STEP 6 -- EVALUATION METRICS
+=================================================================
+
+  Metric                            Value
+  ----------------------------------------
+  Accuracy                         0.9920
+  F1-Score (Macro)                 0.9919
+  F1-Score (Weighted)              0.9920
+  Recall (Macro)                   0.9916
+  Precision (Macro)                0.9923
+  Cohen Kappa                      0.9879
+  MCC                              0.9880
+  ROC-AUC (OvR Macro)              0.9999
+
+              precision    recall  f1-score   support
+
+      Normal     0.9989    0.9761    0.9874      8131
+    Abnormal     0.9779    0.9990    0.9883      8701
+    Critical     1.0000    0.9998    0.9999      8701
+
+    accuracy                         0.9920     25533
+   macro avg     0.9923    0.9916    0.9919     25533
+weighted avg     0.9921    0.9920    0.9920     25533
+
+
+=================================================================
+  STEP 7 -- FLOPs CALCULATION
+=================================================================
+  MACs (thop)      : 1,624,640
+  FLOPs (2xMACs)   : 3,249,280
+  FLOPs (MFLOPs)   : 3.2493
+  FLOPs (GFLOPs)   : 0.003249
+  Total Parameters : 1,622,275
+
+=================================================================
+  STEP 8 -- ENERGY CONSUMPTION & CARBON EMISSION
+=================================================================
+  Power (CPU+GPU)  : 65 W  (CPU=65W, GPU=0W)
+  Carbon intensity : 0.233 kg CO2/kWh
+
+  --- Training ---
+  Duration         : 1917.68 s  (31.96 min)
+  Energy           : 34.6247 Wh  (0.034625 kWh)
+  CO2 emitted      : 8.0676 g  (0.008068 kg)
+
+  --- Inference (test set: 25533 samples) ---
+  Duration         : 0.8784 s
+  Energy           : 0.015859 Wh
+  CO2 emitted      : 0.003695 g
+
+  --- Per Sample ---
+  Energy / sample  : 0.6211 nWh
+  CO2 / sample     : 0.1447 ug
+
+=================================================================
+  STEP 9 -- SUMMARY DASHBOARD
+=================================================================
+  Dashboard saved -> c:\Users\HP\Downloads\AI XGBoost V3\AI XGBoost V3\selected topics\outputs\06_summary_dashboard.png
+
+=================================================================
+  STEP 10 -- SAVING OUTPUTS
+=================================================================
+  Model -> c:\Users\HP\Downloads\AI XGBoost V3\AI XGBoost V3\selected topics\outputs\vitalsigns_dl_model.pt
+
+  +----------------------------------------------------------+
+  |         CLASSIFICATION RESULT GUIDE                     |
+  +----------------------------------------------------------+
+  |  Class 0 -> NORMAL   : Vital signs within healthy range |
+  |  Class 1 -> ABNORMAL : Outside normal range -- monitor  |
+  |  Class 2 -> CRITICAL : Dangerous levels -- act NOW      |
+  +----------------------------------------------------------+
