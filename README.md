@@ -24,8 +24,8 @@ A deep learning pipeline that classifies patient vital signs into risk categorie
 
 | Name | Student ID |
 |------|------------|
-| Rahma Ali Bauomi | 192100170 |
 | Reham Mohamed Asem | 192100089 |
+| Rahma Ali Bauomi | 192100170 |
 | Roaa El Emam Mohamed | 192100083 |
 | Fatemah Ahmed | 192100160 |
 | Merna Ahmed | 192100144 |
